@@ -1,26 +1,16 @@
 package com.jacobi;
 
-import com.jacobi.io.JacobiIO;
+import com.jacobi.io.LinearSystemReader;
+import com.jacobi.model.LinearSystem;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String matrixFile;
-        String estimationFile;
         try {
-            matrixFile = args[0];
-            estimationFile = args[1];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.err.println("CLI arguments not provided");
-            return;
-        }
-        try {
-            Matrix matrix = JacobiIO.readMatrix("data/" + matrixFile);
-            Vector vector = JacobiIO.readVector("data/" + estimationFile);
+            LinearSystemReader reader = new LinearSystemReader("data/A10.txt");
+            LinearSystem system = reader.readSystem();
+            System.out.println(system);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,7 +1,12 @@
 from random import random
 from frame import progress
 
-sizes = [300, 800, 2000]
+sizes = [
+    10,
+    #300,
+    #800,
+    #2000
+]
 for size in sizes:
     with open("A%d.txt" % size, "w") as file:
         file.write("%d %d\n" % (size, size + 1))
