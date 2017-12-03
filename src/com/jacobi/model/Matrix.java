@@ -1,21 +1,57 @@
 package com.jacobi.model;
 
-import com.jacobi.model.immutable.ImmutableMatrix;
+public class Matrix {
+    private double[][] data;
+    private int colsNumber;
 
-public class Matrix extends ImmutableMatrix {
-    public Matrix(int rows, int cols) {
-        super(rows, cols);
+    public Matrix(int rows, int cols){
+        this.data = new double[rows][cols];
+        this.colsNumber = cols;
     }
 
-    public Matrix(ImmutableMatrix matrix) {
-        super(matrix);
+    public Matrix(Matrix matrix) {
+        this.data = matrix.data.clone();
+        this.colsNumber = matrix.colsNumber;
     }
 
-    public ImmutableMatrix toImmutable() {
-        return new ImmutableMatrix(this);
+    public int getRowsNumber() {
+        return this.data.length;
     }
 
-    public void setCell(int row, int col, double value) {
+    public int getColsNumber() {
+        return colsNumber;
+    }
+
+    public double get(int row, int col) {
+        return this.data[row][col];
+    }
+
+    public void set(int row, int col, double value) {
         this.data[row][col] = value;
+    }
+
+    public Vector getRow(int row) {
+        return new Vector(this.data[row]);
+    }
+
+    public Vector getCol(int col) {
+        Vector vector = new Vector(this.getRowsNumber());
+        for (int row = 0; row < vector.getLength(); row++) {
+            vector.set(row, this.data[row][col]);
+        }
+        return vector;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        int rows = this.getRowsNumber();
+        for (int index = 0; index < rows; index++) {
+            builder.append(this.getRow(index).toString());
+            if (index < rows - 1) {
+                builder.append("\n");
+            }
+        }
+        return builder.toString();
     }
 }
